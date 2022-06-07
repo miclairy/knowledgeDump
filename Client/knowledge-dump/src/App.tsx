@@ -14,8 +14,10 @@ function App() {
 	}
 
 	useEffect(() => {
-		console.log('pancake', search)
-		getAutoComplete()
+		console.log('pancake probally should santise the input to protect from x site scripting', search)
+		if (search) {
+			getAutoComplete()
+		}
 
 	}, [search])
 
