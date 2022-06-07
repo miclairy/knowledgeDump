@@ -1,5 +1,9 @@
-import { ChangeEvent, SetStateAction, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import './App.css'
+
+type Words = {
+	Words: string[];
+  };
 
 function App() {
 
@@ -7,6 +11,20 @@ function App() {
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setSearch(event.target.value)
+	}
+
+	useEffect(() => {
+		console.log('pancake', search)
+		getAutoComplete()
+
+	}, [search])
+
+	const getAutoComplete = async () => {
+		const response = await fetch(`http://localhost:3001/Words?search=${encodeURIComponent(search)}`, {
+			method: 'GET',
+		})
+		const autoCompleteResults : Words = await response.json();
+		console.log(autoCompleteResults);
 	}
 
 	return (
@@ -21,6 +39,9 @@ function App() {
 				<p>Notes:</p>
 				<p>use state: set intial in bracket, use square brackets eg </p>
 				<code>const [count, setCount] = useState(0)</code>
+				<p>use effect is a method second arguement is what parameter changes to make it rerender </p>
+				<code>useEffect(() ={'>'} {'{}'}, [])</code>
+
 				<p>input boxes: have a value using the use state and the on change to change it </p>
 				<p>Dropdown: data list element with a list attribute corrosponding to the id of the datalist</p>
 
